@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import BookShelf from "../BookShelf";
+import AppText from "../Constants/AppText";
 
 const BookList = () => {
   return (
@@ -12,7 +14,7 @@ const BookList = () => {
         </div>
       </div>
       <div className="open-search">
-        <a onClick={() => {}}>Add a book</a>
+        <Link to="/search">{AppText.Add_A_Book}</Link>
       </div>
     </div>
   );

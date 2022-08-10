@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
+import AppText from "../Constants/AppText";
 import BooksGrid from "./BooksGrid";
 
 const SearchBooks = () => {
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a className="close-search" onClick={() => {}}>
-          Close
-        </a>
+        <Link className="close-search" to="/">
+          {AppText.Close}
+        </Link>
         <div className="search-books-input-wrapper">
           <input type="text" placeholder="Search by title, author, or ISBN" />
         </div>

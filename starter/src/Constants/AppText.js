@@ -5,6 +5,11 @@ const AppText = {
   Want_To_Read: "Want To Read",
   Read: "Read",
   None: "None",
+  // Search page
+  Close: "Close",
+
+  // Book List 
+  Add_A_Book: "Add a book"
 };
 
 export default AppText;
