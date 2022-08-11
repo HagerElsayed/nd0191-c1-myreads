@@ -1,12 +1,16 @@
 import Book from "./Book";
+import PropTypes from "prop-types";
 
-const BooksGrid = () => {
+const BooksGrid = ({ books }) => {
   return (
     <ol className="books-grid">
-      <Book />
-      <Book />
+      {books.map((book) => {
+        return <Book key={book.id} book={book} />;
+      })}
     </ol>
   );
 };
-
+BooksGrid.propTypes = {
+  books: PropTypes.array.isRequired,
+};
 export default BooksGrid;
