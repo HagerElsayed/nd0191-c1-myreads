@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { search } from "../BooksAPI";
+import { search, update } from "../BooksAPI";
 import AppText from "../Constants/AppText";
 import BooksGrid from "./BooksGrid";
 
@@ -9,7 +9,7 @@ const SearchBooks = () => {
   const [query, setQuery] = useState("");
 
   const handleSearch = (query) => {
-    setQuery(query.trim());
+    setQuery(query); //.trim()
     const searchBook = async () => {
       const books = await search(query.toLowerCase(), 20);
       setBooks(books);
@@ -17,6 +17,13 @@ const SearchBooks = () => {
     if (query !== "") {
       searchBook();
     }
+  };
+
+  const onChangeBookshelf = (book, shelf) => {
+    const updateShelf = async () => {
+      await update(book, shelf);
+    };
+    updateShelf();
   };
 
   return (
@@ -34,9 +41,9 @@ const SearchBooks = () => {
           />
         </div>
       </div>
-      {query !== "" && books && books.length > 0 && (
+      {query !== "" && books?.length > 0 && (
         <div className="search-books-results">
-          <BooksGrid books={books} />
+          <BooksGrid books={books} onChangeBookShelf={onChangeBookshelf} />
         </div>
       )}
     </div>

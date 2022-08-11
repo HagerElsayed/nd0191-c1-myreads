@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAll } from "../BooksAPI";
+import { getAll, update } from "../BooksAPI";
 import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
-import { ShelfType } from "../Helper/ShelfType";
+import { ShelfTypes } from "../Helper/ShelfType";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -18,6 +18,22 @@ const BookList = () => {
     };
     getAllBooks();
   }, []);
+  const onChangeBookshelf = (book, shelf) => {
+    const updateShelf = async () => {
+      await update(book, shelf).then(() => {
+        updateShelfBooksDependsOnType(book, shelf);
+      });
+    };
+    updateShelf();
+  };
+
+  const updateShelfBooksDependsOnType = (book, shelf) => {
+    book.shelf = shelf;
+    let updatedBooks = books.filter(
+      (selectedBook) => book.id !== selectedBook.id
+    );
+    setBooks(updatedBooks.concat([book]));
+  };
 
   return (
     <div className="list-books">
@@ -26,18 +42,15 @@ const BookList = () => {
       </div>
       <div className="list-books-content">
         <div>
-          <BookShelf
-            shelfTitle={AppText.Currently_Reading}
-            books={filterBook(ShelfType.CurrentlyReading.valueOf())}
-          />
-          <BookShelf
-            shelfTitle={AppText.Want_To_Read}
-            books={filterBook(ShelfType.WantToRead.valueOf())}
-          />
-          <BookShelf
-            shelfTitle={AppText.Read}
-            books={filterBook(ShelfType.Read.valueOf())}
-          />
+          {ShelfTypes.map((shelfType) => (
+            <BookShelf
+              shelfTitle={shelfType.title}
+              books={filterBook(shelfType.value)}
+              onChangeBookShelf={(book, shelf) =>
+                onChangeBookshelf(book, shelf)
+              }
+            />
+          ))}
         </div>
       </div>
       <div className="open-search">

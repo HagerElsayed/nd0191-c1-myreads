@@ -1,7 +1,7 @@
 import ShelfTypeChanger from "./ShelfTypeChanger";
 import PropTypes from "prop-types";
 
-const Book = ({ book }) => {
+const Book = ({ book, selectedShelf, onChangeBookShelf }) => {
   return (
     <li>
       <div className="book">
@@ -11,18 +11,24 @@ const Book = ({ book }) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.thumbnail})`,
+              backgroundImage: `url(${book?.imageLinks?.thumbnail})`,
             }}
           ></div>
-          <ShelfTypeChanger />
+          <ShelfTypeChanger
+            selectedShelf={selectedShelf}
+            onChangeBookShelf={onChangeBookShelf}
+            book={book}
+          />
         </div>
-        <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors}</div>
+        <div className="book-title">{book?.title}</div>
+        <div className="book-authors">{book?.authors}</div>
       </div>
     </li>
   );
 };
 Book.propTypes = {
   book: PropTypes.object.isRequired,
+  selectedShelf: PropTypes.string.isRequired,
+  onChangeBookShelf: PropTypes.func.isRequired,
 };
 export default Book;
