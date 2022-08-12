@@ -4,13 +4,11 @@ import { getAll, update } from "../BooksAPI";
 import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
 import { ShelfTypes } from "../Helper/ShelfType";
+import { filterBookByShelf } from "../Helper/filteration";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
-  const filterBook = (shelfType) => {
-    const filteredBooks = books.filter((book) => book.shelf === shelfType);
-    return filteredBooks;
-  };
+
   useEffect(() => {
     const getAllBooks = async () => {
       const books = await getAll();
@@ -18,6 +16,7 @@ const BookList = () => {
     };
     getAllBooks();
   }, []);
+
   const onChangeBookshelf = (book, shelf) => {
     const updateShelf = async () => {
       await update(book, shelf).then(() => {
@@ -44,8 +43,9 @@ const BookList = () => {
         <div>
           {ShelfTypes.map((shelfType) => (
             <BookShelf
+              key={shelfType.title}
               shelfTitle={shelfType.title}
-              books={filterBook(shelfType.value)}
+              books={filterBookByShelf(shelfType.value, books)}
               onChangeBookShelf={(book, shelf) =>
                 onChangeBookshelf(book, shelf)
               }
