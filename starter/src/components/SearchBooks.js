@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getAll, search, update } from "../BooksAPI";
 import AppText from "../Constants/AppText";
-import { filterBookById } from "../Helper/filteration";
+import { filterBookById } from "../Helper/Filtration";
 import BooksGrid from "./BooksGrid";
 
 const SearchBooks = () => {

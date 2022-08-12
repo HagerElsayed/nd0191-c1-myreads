@@ -4,7 +4,7 @@ import { getAll, update } from "../BooksAPI";
 import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
 import { ShelfTypes } from "../Helper/ShelfType";
-import { filterBookByShelf } from "../Helper/filteration";
+import { filterBookByShelf } from "../Helper/Filtration";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
