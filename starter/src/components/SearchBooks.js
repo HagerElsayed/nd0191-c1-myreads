@@ -9,7 +9,7 @@ const SearchBooks = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
   const timeout = useRef();
-  // const inputRef = useRef();
+
   const searchBook = async () => {
     await search(query.toLowerCase(), 20).then((searchedBooks) => {
       updateBooksShelf(searchedBooks);
@@ -19,8 +19,6 @@ const SearchBooks = () => {
     clearTimeout(timeout.current);
     setQuery(query);
     timeout.current = setTimeout(() => {
-      console.log("Testing debounce");
-
       if (query === "") {
         setSearchResults([]);
         return;
@@ -60,7 +58,6 @@ const SearchBooks = () => {
         <div className="search-books-input-wrapper">
           <input
             type="text"
-            // ref={inputRef}
             placeholder={AppText.Search_Placeholder}
             value={query}
             onChange={(event) => handleSearch(event.target.value)}
