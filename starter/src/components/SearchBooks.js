@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAll, search, update } from "../BooksAPI";
 import AppText from "../Constants/AppText";
@@ -8,17 +8,26 @@ import BooksGrid from "./BooksGrid";
 const SearchBooks = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [query, setQuery] = useState("");
-
+  const timeout = useRef();
+  // const inputRef = useRef();
+  const searchBook = async () => {
+    await search(query.toLowerCase(), 20).then((searchedBooks) => {
+      updateBooksShelf(searchedBooks);
+    });
+  };
   const handleSearch = (query) => {
+    clearTimeout(timeout.current);
     setQuery(query);
-    const searchBook = async () => {
-      await search(query.toLowerCase(), 20).then((searchedBooks) => {
-        updateBooksShelf(searchedBooks);
-      });
-    };
-    if (query !== "") {
-      searchBook();
-    }
+    timeout.current = setTimeout(() => {
+      console.log("Testing debounce");
+
+      if (query === "") {
+        setSearchResults([]);
+        return;
+      } else {
+        searchBook();
+      }
+    }, 600);
   };
 
   const updateBooksShelf = (searchedBooks) => {
@@ -51,6 +60,7 @@ const SearchBooks = () => {
         <div className="search-books-input-wrapper">
           <input
             type="text"
+            // ref={inputRef}
             placeholder={AppText.Search_Placeholder}
             value={query}
             onChange={(event) => handleSearch(event.target.value)}
