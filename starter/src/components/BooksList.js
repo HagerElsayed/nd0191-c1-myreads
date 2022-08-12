@@ -5,13 +5,17 @@ import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
 import { ShelfTypes } from "../Helper/ShelfType";
 import { filterBookByShelf } from "../Helper/Filtration";
+import ErrorItem from "./Common/errorItem";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const getAllBooks = async () => {
-      const books = await getAll();
+      const books = await getAll().catch((err) => {
+        setIsError(true);
+      });
       setBooks(books);
     };
     getAllBooks();
@@ -19,9 +23,13 @@ const BookList = () => {
 
   const onChangeBookshelf = (book, shelf) => {
     const updateShelf = async () => {
-      await update(book, shelf).then(() => {
-        updateShelfBooksDependsOnType(book, shelf);
-      });
+      await update(book, shelf)
+        .then(() => {
+          updateShelfBooksDependsOnType(book, shelf);
+        })
+        .catch((err) => {
+          setIsError(true);
+        });
     };
     updateShelf();
   };
@@ -41,16 +49,19 @@ const BookList = () => {
       </div>
       <div className="list-books-content">
         <div>
-          {ShelfTypes.map((shelfType) => (
-            <BookShelf
-              key={shelfType.title}
-              shelfTitle={shelfType.title}
-              books={filterBookByShelf(shelfType.value, books)}
-              onChangeBookShelf={(book, shelf) =>
-                onChangeBookshelf(book, shelf)
-              }
-            />
-          ))}
+          {!isError &&
+            books &&
+            ShelfTypes.map((shelfType) => (
+              <BookShelf
+                key={shelfType.title}
+                shelfTitle={shelfType.title}
+                books={filterBookByShelf(shelfType.value, books)}
+                onChangeBookShelf={(book, shelf) =>
+                  onChangeBookshelf(book, shelf)
+                }
+              />
+            ))}
+          {isError && <ErrorItem source="images/Error.jpg" />}
         </div>
       </div>
       <div className="open-search">

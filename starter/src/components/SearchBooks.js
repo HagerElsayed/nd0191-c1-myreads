@@ -4,16 +4,23 @@ import { getAll, search, update } from "../BooksAPI";
 import AppText from "../Constants/AppText";
 import { filterBookById } from "../Helper/Filtration";
 import BooksGrid from "./BooksGrid";
+import ErrorItem from "./Common/errorItem";
 
 const SearchBooks = () => {
   const [searchResults, setSearchResults] = useState([]);
+  const [isError, setIsError] = useState(false);
+
   const [query, setQuery] = useState("");
   const timeout = useRef();
 
   const searchBook = async () => {
-    await search(query.toLowerCase(), 20).then((searchedBooks) => {
-      updateBooksShelf(searchedBooks);
-    });
+    await search(query.toLowerCase(), 20)
+      .then((searchedBooks) => {
+        updateBooksShelf(searchedBooks);
+      })
+      .catch((err) => {
+        setIsError(true);
+      });
   };
   const handleSearch = (query) => {
     clearTimeout(timeout.current);
@@ -29,17 +36,21 @@ const SearchBooks = () => {
   };
 
   const updateBooksShelf = (searchedBooks) => {
-    getAll().then((allbooks) => {
-      allbooks?.forEach((book) => {
-        if (searchedBooks.length > 0) {
-          let filteredBooks = filterBookById(book.id, searchedBooks);
-          if (filteredBooks.length > 0) {
-            filteredBooks[0].shelf = book.shelf;
+    getAll()
+      .then((allbooks) => {
+        allbooks?.forEach((book) => {
+          if (searchedBooks.length > 0) {
+            let filteredBooks = filterBookById(book.id, searchedBooks);
+            if (filteredBooks.length > 0) {
+              filteredBooks[0].shelf = book.shelf;
+            }
           }
-        }
+        });
+        setSearchResults(searchedBooks);
+      })
+      .catch((err) => {
+        setIsError(true);
       });
-      setSearchResults(searchedBooks);
-    });
   };
 
   const onChangeBookshelf = (book, shelf) => {
@@ -64,7 +75,7 @@ const SearchBooks = () => {
           />
         </div>
       </div>
-      {query !== "" && searchResults?.length > 0 && (
+      {query !== "" && searchResults?.length > 0 && !isError && (
         <div className="search-books-results">
           <BooksGrid
             books={searchResults}
@@ -72,6 +83,7 @@ const SearchBooks = () => {
           />
         </div>
       )}
+      {isError && <ErrorItem source="images/Error.jpg" />}
     </div>
   );
 };
