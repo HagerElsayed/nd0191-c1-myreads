@@ -5,6 +5,7 @@ import AppText from "../Constants/AppText";
 import { filterBookById } from "../Helper/Filtration";
 import BooksGrid from "./BooksGrid";
 import ErrorItem from "./Common/errorItem";
+import PropTypes from "prop-types";
 
 const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -73,6 +74,11 @@ const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
       {isError && <ErrorItem source="images/Error.jpg" />}
     </div>
   );
+};
+
+SearchBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeBookShelf: PropTypes.func.isRequired,
 };
 
 export default SearchBooks;
