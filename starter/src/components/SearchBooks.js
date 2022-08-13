@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAll, search, update } from "../BooksAPI";
+import { search } from "../BooksAPI";
 import AppText from "../Constants/AppText";
 import { filterBookById } from "../Helper/Filtration";
 import BooksGrid from "./BooksGrid";
 import ErrorItem from "./Common/errorItem";
 
-const SearchBooks = () => {
+const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isError, setIsError] = useState(false);
 
@@ -36,28 +36,15 @@ const SearchBooks = () => {
   };
 
   const updateBooksShelf = (searchedBooks) => {
-    getAll()
-      .then((allbooks) => {
-        allbooks?.forEach((book) => {
-          if (searchedBooks.length > 0) {
-            let filteredBooks = filterBookById(book.id, searchedBooks);
-            if (filteredBooks.length > 0) {
-              filteredBooks[0].shelf = book.shelf;
-            }
-          }
-        });
-        setSearchResults(searchedBooks);
-      })
-      .catch((err) => {
-        setIsError(true);
-      });
-  };
-
-  const onChangeBookshelf = (book, shelf) => {
-    const updateShelf = async () => {
-      await update(book, shelf);
-    };
-    updateShelf();
+    allbooks?.forEach((book) => {
+      if (searchedBooks.length > 0) {
+        let filteredBooks = filterBookById(book.id, searchedBooks);
+        if (filteredBooks.length > 0) {
+          filteredBooks[0].shelf = book.shelf;
+        }
+      }
+    });
+    setSearchResults(searchedBooks);
   };
 
   return (
@@ -79,7 +66,7 @@ const SearchBooks = () => {
         <div className="search-books-results">
           <BooksGrid
             books={searchResults}
-            onChangeBookShelf={onChangeBookshelf}
+            onChangeBookShelf={onChangeBookShelf}
           />
         </div>
       )}

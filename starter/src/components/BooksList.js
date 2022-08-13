@@ -1,47 +1,12 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAll, update } from "../BooksAPI";
 import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
 import { ShelfTypes } from "../Helper/ShelfType";
 import { filterBookByShelf } from "../Helper/Filtration";
 import ErrorItem from "./Common/errorItem";
+import PropTypes from "prop-types";
 
-const BookList = () => {
-  const [books, setBooks] = useState([]);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    const getAllBooks = async () => {
-      const books = await getAll().catch((err) => {
-        setIsError(true);
-      });
-      setBooks(books);
-    };
-    getAllBooks();
-  }, []);
-
-  const onChangeBookshelf = (book, shelf) => {
-    const updateShelf = async () => {
-      await update(book, shelf)
-        .then(() => {
-          updateShelfBooksDependsOnType(book, shelf);
-        })
-        .catch((err) => {
-          setIsError(true);
-        });
-    };
-    updateShelf();
-  };
-
-  const updateShelfBooksDependsOnType = (book, shelf) => {
-    book.shelf = shelf;
-    let updatedBooks = books.filter(
-      (selectedBook) => book.id !== selectedBook.id
-    );
-    setBooks(updatedBooks.concat([book]));
-  };
-
+const BookList = ({ onChangeBookShelf, books, isError }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -56,9 +21,7 @@ const BookList = () => {
                 key={shelfType.title}
                 shelfTitle={shelfType.title}
                 books={filterBookByShelf(shelfType.value, books)}
-                onChangeBookShelf={(book, shelf) =>
-                  onChangeBookshelf(book, shelf)
-                }
+                onChangeBookShelf={onChangeBookShelf}
               />
             ))}
           {isError && <ErrorItem source="images/Error.jpg" />}
@@ -70,5 +33,9 @@ const BookList = () => {
     </div>
   );
 };
-
+BookList.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  books: PropTypes.array.isRequired,
+  onChangeBookShelf: PropTypes.func.isRequired,
+};
 export default BookList;

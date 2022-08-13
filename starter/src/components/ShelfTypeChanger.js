@@ -8,7 +8,7 @@ const ShelfTypeChanger = ({ selectedShelf, onChangeBookShelf, book }) => {
       <select
         value={selectedShelf}
         onChange={(event) => {
-          onChangeBookShelf(book, event.target.value); // callback function to handle changeing Book shelf
+          onChangeBookShelf(book, event?.target?.value); // callback function to handle changeing Book shelf
         }}
       >
         <option value="none" disabled>
