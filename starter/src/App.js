@@ -1,10 +1,11 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import SearchBooks from "./components/SearchBooks";
-import BookList from "./components/BooksList";
+import SearchBooks from "./pages/SearchBooks";
 import ErrorItem from "./components/Common/errorItem";
 import { getAll, update } from "./BooksAPI";
 import { useEffect, useState } from "react";
+import BookList from "./pages/BooksList";
+import BookDetails from "./pages/BookDetails";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -71,6 +72,7 @@ function App() {
             />
           }
         />
+        <Route exact path="/bookDetails/:id" element={<BookDetails />} />
       </Routes>
     </div>
   );

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { search } from "../BooksAPI";
 import AppText from "../Constants/AppText";
 import { filterBookById } from "../Helper/Filtration";
-import BooksGrid from "./BooksGrid";
-import ErrorItem from "./Common/errorItem";
+import BooksGrid from "../components/BooksGrid";
 import PropTypes from "prop-types";
+import ErrorItem from "../components/Common/errorItem";
 
 const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -77,7 +77,7 @@ const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
 };
 
 SearchBooks.propTypes = {
-  books: PropTypes.array.isRequired,
+  allbooks: PropTypes.array.isRequired,
   onChangeBookShelf: PropTypes.func.isRequired,
 };
 

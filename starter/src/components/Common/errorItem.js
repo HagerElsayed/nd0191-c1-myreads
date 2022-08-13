@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const ErrorItem = ({ source }) => {
   return (
     <div className="center-image">
-      <img src={source} alt="Error Page Not found 404" />
+      <img src={source} alt="Error" />
     </div>
   );
 };

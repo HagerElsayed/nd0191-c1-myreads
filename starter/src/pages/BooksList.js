@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import BookShelf from "./BookShelf";
 import AppText from "../Constants/AppText";
 import { ShelfTypes } from "../Helper/ShelfType";
 import { filterBookByShelf } from "../Helper/Filtration";
-import ErrorItem from "./Common/errorItem";
 import PropTypes from "prop-types";
+import BookShelf from "../components/BookShelf";
+import ErrorItem from "../components/Common/errorItem";
 
 const BookList = ({ onChangeBookShelf, books, isError }) => {
   return (

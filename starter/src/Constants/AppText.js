@@ -8,10 +8,11 @@ const AppText = {
   // Search page
   Close: "Close",
   Search_Placeholder: "Search by title, author, or ISBN",
-  
+
   // Book List
   Add_A_Book: "Add a book",
-  My_Reads: "MyReads",
+  My_Reads: "My Books Plan",
+  back: "Back",
 };
 
 export default AppText;

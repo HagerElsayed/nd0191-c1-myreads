@@ -1,0 +1,20 @@
+.book-details {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D2CDFB;
+    
+}
+
+.book-details h2 {
+    color: grey;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.authors {
+font-size: small;
+font-weight:400;
+color: grey;
+}
