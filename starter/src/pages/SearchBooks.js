@@ -17,6 +17,7 @@ const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
   const searchBook = async () => {
     await search(query.toLowerCase(), 20)
       .then((searchedBooks) => {
+        setIsError(false);
         updateBooksShelf(searchedBooks);
       })
       .catch((err) => {

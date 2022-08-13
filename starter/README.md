@@ -111,3 +111,6 @@ never hesitate to open a PR just please raise a ticket with the issue first and 
 
 ## Author
 - updated by Hager Elsayed
+
+## Credits
+- the images used in Error and page not found is free from vecteezy.com
