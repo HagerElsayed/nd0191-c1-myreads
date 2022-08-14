@@ -73,6 +73,9 @@ const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
           />
         </div>
       )}
+      {query !== "" && searchResults?.items?.length === 0 && !isError && (
+        <div className="centered-div">{AppText.Empty_Items}</div>
+      )}
       {isError && <ErrorItem source="images/Error.jpg" />}
     </div>
   );
