@@ -8,7 +8,7 @@ const AppText = {
   // Search page
   Close: "Close",
   Search_Placeholder: "Search by title, author, or ISBN",
-
+  Empty_Items: "Book not found, it'd be awesome if you give searching for another book a try",
   // Book List
   Add_A_Book: "Add a book",
   My_Reads: "My Books Plan",

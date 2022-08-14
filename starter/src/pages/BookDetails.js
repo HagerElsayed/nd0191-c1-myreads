@@ -7,7 +7,6 @@ import { get } from "../BooksAPI";
 import "./styles/BookDetails.style.css";
 import AppText from "../Constants/AppText";
 const BookDetails = () => {
-  // const { state } = useLocation();
   const { id } = useParams();
   const [isError, setIsError] = useState(false);
   const [book, setBook] = useState([]);

@@ -6,6 +6,7 @@ import { filterBookById } from "../Helper/Filtration";
 import BooksGrid from "../components/BooksGrid";
 import PropTypes from "prop-types";
 import ErrorItem from "../components/Common/errorItem";
+import "./styles/SearchBook.css";
 
 const SearchBooks = ({ onChangeBookShelf, allbooks }) => {
   const [searchResults, setSearchResults] = useState([]);
